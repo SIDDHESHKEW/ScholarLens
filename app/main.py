@@ -34,3 +34,14 @@ app.add_middleware(
 )
 
 app.include_router(api_router, prefix=settings.api_v1_prefix)
+
+
+@app.get("/")
+def root():
+    return {
+        "status": "ok",
+        "service": "scholarmatch-api",
+        "version": "0.1.0",
+        "docs_url": "/docs",
+        "health_url": f"{settings.api_v1_prefix}/health",
+    }

@@ -4,8 +4,15 @@ import type {
   ScholarshipRead,
 } from '../types/api';
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000';
+const RAW_BASE_URL = (
+  import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000'
+)
+  .trim()
+  .replace(/\/+$/, '');
+
+const API_BASE_URL = RAW_BASE_URL.endsWith('/api/v1')
+  ? RAW_BASE_URL.slice(0, -7)
+  : RAW_BASE_URL;
 
 const REQUEST_TIMEOUT_MS = 15000;
 
