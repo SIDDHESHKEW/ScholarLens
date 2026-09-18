@@ -1,0 +1,23 @@
+[
+  {
+    "name": "SYNTHETIC TEST DATA - Future Scholars Grant",
+    "provider": "Example Education Foundation",
+    "description": "A synthetic record used only for pipeline tests.",
+    "official_source_url": "https://example.org/synthetic/future-scholars",
+    "application_url": "https://example.org/synthetic/future-scholars/apply",
+    "amount": 50000,
+    "currency": "Rs.",
+    "deadline": "31/08/2026",
+    "status": "open",
+    "requirements": []
+  },
+  {
+    "name": "SYNTHETIC TEST DATA - Rural STEM Award",
+    "provider": "Example Education Foundation",
+    "description": "A second synthetic record used only for pipeline tests.",
+    "official_source_url": "https://example.org/synthetic/rural-stem",
+    "application_url": "https://example.org/synthetic/rural-stem/apply",
+    "deadline": "2026-12-31",
+    "requirements": []
+  }
+]
