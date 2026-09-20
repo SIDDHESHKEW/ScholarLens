@@ -26,11 +26,24 @@ export const PredictPage: React.FC<PredictPageProps> = ({ onSubmit, isSubmitting
   const [randomNotice, setRandomNotice] = useState(false);
 
   const handleFieldChange = (field: keyof StudentProfileFormState, value: unknown) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
+    setForm((prev) => {
+      const updated = { ...prev, [field]: value };
+      if (field === 'education_level' && value === 'school') {
+        updated.gpa = '';
+      }
+      return updated;
+    });
     if (errors[field]) {
       setErrors((prev) => {
         const copy = { ...prev };
         delete copy[field];
+        return copy;
+      });
+    }
+    if (field === 'education_level' && value === 'school' && errors.gpa) {
+      setErrors((prev) => {
+        const copy = { ...prev };
+        delete copy.gpa;
         return copy;
       });
     }
@@ -65,10 +78,10 @@ export const PredictPage: React.FC<PredictPageProps> = ({ onSubmit, isSubmitting
       if (form.field_of_study === 'other' && !form.custom_field_of_study.trim()) {
         errs.custom_field_of_study = 'Please specify your field of study.';
       }
-      if (form.gpa.trim()) {
+      if (form.education_level !== 'school' && form.gpa.trim()) {
         const gpa = parseFloat(form.gpa);
-        if (isNaN(gpa) || gpa < 0 || gpa > 4.0) {
-          errs.gpa = 'GPA must be between 0.0 and 4.0.';
+        if (isNaN(gpa) || gpa < 0 || gpa > 10.0) {
+          errs.gpa = 'GPA must be between 0.0 and 10.0.';
         }
       }
       if (form.academic_percentage.trim()) {

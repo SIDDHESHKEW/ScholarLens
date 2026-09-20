@@ -27,7 +27,13 @@ export const EducationStep: React.FC<EducationStepProps> = ({ form, onChange, er
           <select
             id="education-level-select"
             value={form.education_level}
-            onChange={(e) => onChange('education_level', e.target.value)}
+            onChange={(e) => {
+              const val = e.target.value;
+              onChange('education_level', val);
+              if (val === 'school') {
+                onChange('gpa', '');
+              }
+            }}
             className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
           >
             {EDUCATION_LEVEL_OPTIONS.map((opt) => (
@@ -92,27 +98,29 @@ export const EducationStep: React.FC<EducationStepProps> = ({ form, onChange, er
         </div>
 
         {/* GPA */}
-        <div>
-          <label htmlFor="gpa-input" className="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-1.5">
-            Cumulative GPA (0.0 – 4.0 Scale)
-          </label>
-          <input
-            id="gpa-input"
-            type="number"
-            step="0.01"
-            min="0"
-            max="4.0"
-            value={form.gpa}
-            onChange={(e) => onChange('gpa', e.target.value)}
-            placeholder="e.g. 3.8"
-            className={`w-full px-3.5 py-2.5 rounded-lg border ${
-              errors.gpa
-                ? 'border-red-500 bg-red-50/20 dark:bg-red-950/20'
-                : 'border-slate-300 dark:border-slate-700'
-            } bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm`}
-          />
-          {errors.gpa && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.gpa}</p>}
-        </div>
+        {form.education_level !== 'school' && (
+          <div>
+            <label htmlFor="gpa-input" className="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-1.5">
+              Cumulative GPA (0.0 – 10.0 Scale)
+            </label>
+            <input
+              id="gpa-input"
+              type="number"
+              step="any"
+              min="0"
+              max="10"
+              value={form.gpa}
+              onChange={(e) => onChange('gpa', e.target.value)}
+              placeholder="e.g. 8.5"
+              className={`w-full px-3.5 py-2.5 rounded-lg border ${
+                errors.gpa
+                  ? 'border-red-500 bg-red-50/20 dark:bg-red-950/20'
+                  : 'border-slate-300 dark:border-slate-700'
+              } bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm`}
+            />
+            {errors.gpa && <p className="mt-1 text-xs text-red-600 dark:text-red-400">{errors.gpa}</p>}
+          </div>
+        )}
 
         {/* Academic Percentage */}
         <div>
